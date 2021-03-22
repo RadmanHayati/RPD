@@ -1,4 +1,4 @@
-package com.codinginflow.imagesearchapp
+package com.codinginflow.rpd
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
