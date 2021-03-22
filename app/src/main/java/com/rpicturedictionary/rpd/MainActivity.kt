@@ -1,4 +1,4 @@
-package com.codinginflow.rpd
+package com.rpicturedictionary.rpd
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

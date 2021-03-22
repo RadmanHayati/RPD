@@ -1,4 +1,4 @@
-package com.codinginflow.rpd.data
+package com.rpicturedictionary.rpd.data
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 

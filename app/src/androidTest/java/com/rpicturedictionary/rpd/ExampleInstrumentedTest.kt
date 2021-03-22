@@ -1,4 +1,4 @@
-package com.codinginflow.rpd
+package com.rpicturedictionary.rpd
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

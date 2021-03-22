@@ -1,4 +1,4 @@
-package com.codinginflow.rpd
+package com.rpicturedictionary.rpd
 
 import org.junit.Test
 
