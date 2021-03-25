@@ -14,11 +14,13 @@ class GalleryViewModel @ViewModelInject constructor(private val repository: Unsp
     val photos = currentQuery.switchMap {
         repository.getSearchResult(it).cachedIn(viewModelScope)
     }
-    fun searchPhotos(query:String){
+
+    fun searchPhotos(query: String) {
         currentQuery.value = query
     }
-    companion object{
-        private const val DEFAULT_QUERY = "apples"
+
+    companion object {
+        private const val DEFAULT_QUERY = "cats"
     }
 
 }
