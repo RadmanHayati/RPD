@@ -13,17 +13,6 @@ import com.rpicturedictionary.rpd.databinding.ItemUnsplashPhotoBinding
 
 class UnsplashPhotoAdapter :
     PagingDataAdapter<UnsplashPhoto, UnsplashPhotoAdapter.PhotoViewHolder>(PHOTO_COMPRATOR) {
-    companion object {
-        private val PHOTO_COMPRATOR = object : DiffUtil.ItemCallback<UnsplashPhoto>() {
-            override fun areItemsTheSame(oldItem: UnsplashPhoto, newItem: UnsplashPhoto) =
-                oldItem.id == newItem.id
-
-            override fun areContentsTheSame(
-                oldItem: UnsplashPhoto,
-                newItem: UnsplashPhoto
-            ) = oldItem == newItem
-        }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
         val binding =
@@ -50,6 +39,17 @@ class UnsplashPhotoAdapter :
                     .into(imageView)
                 textViewUserName.text = photo.user.username
             }
+        }
+    }
+    companion object {
+        private val PHOTO_COMPRATOR = object : DiffUtil.ItemCallback<UnsplashPhoto>() {
+            override fun areItemsTheSame(oldItem: UnsplashPhoto, newItem: UnsplashPhoto) =
+                oldItem.id == newItem.id
+
+            override fun areContentsTheSame(
+                oldItem: UnsplashPhoto,
+                newItem: UnsplashPhoto
+            ) = oldItem == newItem
         }
     }
 }

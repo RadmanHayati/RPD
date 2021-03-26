@@ -11,8 +11,9 @@ import com.rpicturedictionary.rpd.data.UnsplashRepository
 class GalleryViewModel @ViewModelInject constructor(private val repository: UnsplashRepository) :
     ViewModel() {
     private val currentQuery = MutableLiveData(DEFAULT_QUERY)
-    val photos = currentQuery.switchMap {
-        repository.getSearchResult(it).cachedIn(viewModelScope)
+    val photos = currentQuery.switchMap { queryString ->
+        repository.getSearchResult(queryString).cachedIn(viewModelScope)
+        // repository.getSearchResult("apple").cachedIn(viewModelScope)
     }
 
     fun searchPhotos(query: String) {
