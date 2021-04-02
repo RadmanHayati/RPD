@@ -10,21 +10,24 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.rpicturedictionary.rpd.R
+import com.rpicturedictionary.rpd.data.UnsplashPhoto
 import com.rpicturedictionary.rpd.databinding.FragmentGalleryBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class GalleryFragment : Fragment(R.layout.fragment_gallery) {
+class GalleryFragment : Fragment(R.layout.fragment_gallery),
+    UnsplashPhotoAdapter.OnItemClickListener {
     private val viewModel by viewModels<GalleryViewModel>()
     private var _binding: FragmentGalleryBinding? = null
     private val binding get() = _binding!!
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // super.onViewCreated(view, savedInstanceState)
         _binding = FragmentGalleryBinding.bind(view)
-        val adapter = UnsplashPhotoAdapter()
+        val adapter = UnsplashPhotoAdapter(this)
         binding.apply {
             recyclerView.setHasFixedSize(true)
             recyclerView.adapter = adapter.withLoadStateHeaderAndFooter(
@@ -45,22 +48,28 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
                 buttonRetry.isVisible = loadState.source.refresh is LoadState.Error
                 textViewError.isVisible = loadState.source.refresh is LoadState.Error
 
-           // No result
-            if(loadState.source.refresh is LoadState.NotLoading &&
+                // No result
+                if (loadState.source.refresh is LoadState.NotLoading &&
                     loadState.append.endOfPaginationReached &&
-                        adapter.itemCount < 1){
+                    adapter.itemCount < 1
+                ) {
 
-                recyclerView.isVisible= false
-                textViewEmpty.isVisible = true
+                    recyclerView.isVisible = false
+                    textViewEmpty.isVisible = true
 
-            } else {
-                textViewEmpty.isVisible = false
-            }
+                } else {
+                    textViewEmpty.isVisible = false
+                }
 
             }
         }
 
         setHasOptionsMenu(true)
+    }
+
+    override fun onItemClick(photo: UnsplashPhoto) {
+        val action = GalleryFragmentDirections.actionGalleryFragmentToDetailsFragment(photo)
+        findNavController().navigate(action)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
