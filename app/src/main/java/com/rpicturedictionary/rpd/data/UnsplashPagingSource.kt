@@ -6,7 +6,8 @@ import retrofit2.HttpException
 import java.io.IOException
 
 private const val UNSPLASH_STARTING_PAGE_INDEX = 1
-
+// where the api should be implemented
+ // the class gets an instance of UnsplashApi and a query
 class UnsplashPagingSource(
     private val unsplashApi: UnsplashApi,
     private val query: String
