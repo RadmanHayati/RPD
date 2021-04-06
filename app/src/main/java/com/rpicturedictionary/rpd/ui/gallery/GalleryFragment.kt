@@ -35,7 +35,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
         }
         setHasOptionsMenu(true)
     }
-    //alright
+    //alrightt
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
