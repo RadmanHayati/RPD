@@ -23,6 +23,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
     private val binding get() = _binding!!
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // super.onViewCreated(view, savedInstanceState)
+        //new
         _binding = FragmentGalleryBinding.bind(view)
         val adapter = UnsplashPhotoAdapter()
         binding.apply {
