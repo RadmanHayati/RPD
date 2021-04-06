@@ -7,9 +7,13 @@ import android.view.MenuInflater
 import android.view.View
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import com.rpicturedictionary.rpd.R
+import com.rpicturedictionary.rpd.data.UnsplashPhoto
 import com.rpicturedictionary.rpd.databinding.FragmentGalleryBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,7 +26,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // super.onViewCreated(view, savedInstanceState)
         _binding = FragmentGalleryBinding.bind(view)
-        val adapter = UnsplashPhotoAdapter()
+        val adapter = UnsplashPhotoAdapter(this)
         binding.apply {
             recyclerView.setHasFixedSize(true)
             recyclerView.adapter = adapter.withLoadStateHeaderAndFooter(
@@ -31,19 +35,48 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
             )
         }
         viewModel.photos.observe(viewLifecycleOwner) {
-             adapter.submitData(viewLifecycleOwner.lifecycle, it)
+            adapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
+        adapter.addLoadStateListener { loadState ->
+            binding.apply {
+                progressBar.isVisible = loadState.source.refresh is LoadState.Loading
+                recyclerView.isVisible = loadState.source.refresh is LoadState.NotLoading
+                buttonRetry.isVisible = loadState.source.refresh is LoadState.Error
+                textViewError.isVisible = loadState.source.refresh is LoadState.Error
+
+                // No result
+                if (loadState.source.refresh is LoadState.NotLoading &&
+                    loadState.append.endOfPaginationReached &&
+                    adapter.itemCount < 1
+                ) {
+
+                    recyclerView.isVisible = false
+                    textViewEmpty.isVisible = true
+
+                } else {
+                    textViewEmpty.isVisible = false
+                }
+
+            }
+        }
+
         setHasOptionsMenu(true)
+    }
+
+    override fun onItemClick(photo: UnsplashPhoto) {
+        val action = GalleryFragmentDirections.actionGalleryFragmentToDetailsFragment(photo)
+        findNavController().navigate(action)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_gallery,menu)
-        val searchItem=menu.findItem(R.id.action_search)
-        val searchView=searchItem.actionView as androidx.appcompat.widget.SearchView
-        searchView.setOnQueryTextListener(object :androidx.appcompat.widget.SearchView.OnQueryTextListener{
+        inflater.inflate(R.menu.menu_gallery, menu)
+        val searchItem = menu.findItem(R.id.action_search)
+        val searchView = searchItem.actionView as androidx.appcompat.widget.SearchView
+        searchView.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if (query !=null) {
+                if (query != null) {
                     binding.recyclerView.scrollToPosition(0)
                     viewModel.searchPhotos(query)
                     searchView.clearFocus()
@@ -52,13 +85,14 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-              return true
+                return true
             }
 
         })
-//sth
+
 
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
