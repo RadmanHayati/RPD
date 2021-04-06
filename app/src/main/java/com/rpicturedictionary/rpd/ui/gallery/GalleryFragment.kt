@@ -56,7 +56,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
             }
 
         })
-
+//sth
 
     }
     override fun onDestroyView() {
