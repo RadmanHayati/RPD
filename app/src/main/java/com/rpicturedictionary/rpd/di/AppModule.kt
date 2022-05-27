@@ -2,6 +2,7 @@ package com.rpicturedictionary.rpd.di
 
 import com.rpicturedictionary.rpd.api.UnsplashApi
 import com.rpicturedictionary.rpd.api.UnsplashResponse
+import com.rpicturedictionary.rpd.api.dictionaryApi.DictionaryApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,4 +26,9 @@ object AppModule {
     @Singleton
     fun provideUnsplashApi(retrofit: Retrofit): UnsplashApi =
         retrofit.create(UnsplashApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideDictionaryApi(retrofit: Retrofit): DictionaryApi =
+        retrofit.create(DictionaryApi::class.java)
 }

@@ -10,12 +10,16 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.rpicturedictionary.rpd.R
 import com.rpicturedictionary.rpd.data.UnsplashPhoto
 import com.rpicturedictionary.rpd.databinding.FragmentGalleryBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Delay
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -40,6 +44,9 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery),
         }
         viewModel.photos.observe(viewLifecycleOwner) {
             adapter.submitData(viewLifecycleOwner.lifecycle, it)
+        }
+        viewModel.words.observe(viewLifecycleOwner){
+            Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
         }
         adapter.addLoadStateListener { loadState ->
             binding.apply {
