@@ -45,8 +45,13 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery),
         viewModel.photos.observe(viewLifecycleOwner) {
             adapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
-        viewModel.words.observe(viewLifecycleOwner){
-            Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
+        viewModel.words.observe(viewLifecycleOwner) { response ->
+            if (response.isEmpty()) {
+         //       binding.layoutDictionary.visibility = View.GONE
+            } else {
+                binding.txtMeaning.text = response.first().meanings[0].definitions[0].toString()
+                binding.txtPhonetics.text = response.first().phonetic
+            }
         }
         adapter.addLoadStateListener { loadState ->
             binding.apply {
