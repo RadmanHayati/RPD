@@ -3,8 +3,10 @@ package com.codinginflow.exchangeApp.repository
 import com.codinginflow.exchangeApp.data.remote.ExchangeApi
 import com.codinginflow.exchangeApp.util.Resource
 import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.Exception
 
+@Singleton
 class ExchangeRepository @Inject constructor(
     private val api: ExchangeApi
 ) {
