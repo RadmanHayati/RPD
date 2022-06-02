@@ -19,7 +19,7 @@
         android:label="fragment_details"
         tools:layout="@layout/fragment_details" >
         <argument
-            android:name="Currency"
+            android:name="selectedCurrency"
             app:argType="com.codinginflow.exchangeApp.data.remote.response.Currency" />
     </fragment>
 </navigation>

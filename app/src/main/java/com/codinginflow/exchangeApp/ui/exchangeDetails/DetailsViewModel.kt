@@ -3,6 +3,7 @@ package com.codinginflow.exchangeApp.ui.exchangeDetails
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.codinginflow.exchangeApp.data.remote.response.History
 import com.codinginflow.exchangeApp.repository.ExchangeRepository
 import com.codinginflow.exchangeApp.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +14,7 @@ import javax.inject.Inject
 class DetailsViewModel @Inject constructor(
     private val repository: ExchangeRepository
 ) : ViewModel() {
-    val currencyInfo = MutableLiveData<Resource<Any>>()
+    val currencyInfo = MutableLiveData<Resource<History>>()
     val isLoading = MutableLiveData(false)
     val loadError = MutableLiveData<String>()
     fun loadCurrencyInfo(name: String) {

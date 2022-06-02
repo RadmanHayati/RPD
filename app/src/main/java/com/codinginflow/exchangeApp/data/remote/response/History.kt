@@ -4,8 +4,4 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Currency(
-    val name: String,
-    val price: Double,
-    val image: String
-) : Parcelable
+data class History(val history: List<List<Double>>? = null):Parcelable

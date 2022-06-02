@@ -51,10 +51,8 @@ class ExchangeListFragment : Fragment(R.layout.fragment_exchange_list),
 
     }
 
-    override fun onItemClick(currency: Currency) {
-        val action = ExchangeListFragmentDirections.actionExchangeListFragment2ToDetailsFragment(
-            currency
-        )
+    override fun onItemClick(Currency: Currency) {
+        val action = ExchangeListFragmentDirections.actionExchangeListFragment2ToDetailsFragment(Currency)
         findNavController().navigate(action)
     }
 }

@@ -35,13 +35,6 @@ class ExchangeListAdapter(private val listener: OnItemClickListener) :
                 }*/
             }
         }
-
-        fun bind(word: Currency) {
-            binding.apply {
-                //                checkBoxLearned.isChecked = word.learned
-//                textViewWord.text = word.word
-//                textViewWord.paint.isStrikeThruText = word.learned
-//                labelPriority.isVisible = word.important
                 fun bind(currency: Currency) {
                     binding.apply {
                         binding.apply {
@@ -57,13 +50,10 @@ class ExchangeListAdapter(private val listener: OnItemClickListener) :
                     }
                 }
 
-            }
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordsViewHolder {
-        val binding =
-            ItemCurrencyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemCurrencyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return WordsViewHolder(binding)
     }
 
