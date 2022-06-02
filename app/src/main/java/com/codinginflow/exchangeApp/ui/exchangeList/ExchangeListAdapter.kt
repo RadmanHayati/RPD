@@ -5,6 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.codinginflow.exchangeApp.R
 import com.codinginflow.exchangeApp.data.remote.response.Currency
 import com.codinginflow.exchangeApp.databinding.ItemCurrencyBinding
 
@@ -19,8 +22,8 @@ class ExchangeListAdapter(private val listener: OnItemClickListener) :
                 root.setOnClickListener {
                     val position = adapterPosition
                     if (position != RecyclerView.NO_POSITION) {
-                        val word = getItem(position)
-                        listener.onItemClick(word)
+                        val Currency = getItem(position)
+                        listener.onItemClick(Currency)
                     }
                 }/*
                 checkBoxLearned.setOnClickListener {
@@ -35,16 +38,32 @@ class ExchangeListAdapter(private val listener: OnItemClickListener) :
 
         fun bind(word: Currency) {
             binding.apply {
-//                checkBoxLearned.isChecked = word.learned
+                //                checkBoxLearned.isChecked = word.learned
 //                textViewWord.text = word.word
 //                textViewWord.paint.isStrikeThruText = word.learned
 //                labelPriority.isVisible = word.important
+                fun bind(currency: Currency) {
+                    binding.apply {
+                        binding.apply {
+                            Glide.with(itemView)
+                                .load(currency.image)
+                                .centerCrop()
+                                .transition(DrawableTransitionOptions.withCrossFade())
+                                .error(R.drawable.ic_error)
+                                .into(imgLogo)
+                        }
+                        txtName.text = currency.name
+                        txtName.text = currency.price.toString()
+                    }
+                }
+
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordsViewHolder {
-        val binding = ItemCurrencyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemCurrencyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return WordsViewHolder(binding)
     }
 
@@ -60,8 +79,9 @@ class ExchangeListAdapter(private val listener: OnItemClickListener) :
 
     class DiffCallback : DiffUtil.ItemCallback<Currency>() {
         override fun areItemsTheSame(oldItem: Currency, newItem: Currency): Boolean =
-            oldItem.id == newItem.id
+            oldItem.name == newItem.name
 
-        override fun areContentsTheSame(oldItem: Currency, newItem: Currency): Boolean = oldItem == newItem
+        override fun areContentsTheSame(oldItem: Currency, newItem: Currency): Boolean =
+            oldItem == newItem
     }
 }
