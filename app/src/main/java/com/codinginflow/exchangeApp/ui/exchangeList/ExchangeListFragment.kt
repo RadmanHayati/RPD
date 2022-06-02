@@ -3,6 +3,7 @@ package com.codinginflow.exchangeApp.ui.exchangeList
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -37,14 +38,14 @@ class ExchangeListFragment : Fragment(R.layout.fragment_exchange_list),
             }
             viewModel.isLoading.observe(viewLifecycleOwner) { response ->
                 when (response) {
-                    true -> {}
-                    false -> {}
+                    true -> {progress_bar.visibility = View.VISIBLE}
+                    false -> {progress_bar.visibility = View.INVISIBLE}
                 }
 
             }
             viewModel.loadError.observe(viewLifecycleOwner) {
                 if (it.isNotEmpty()) {
-                    // txt_error = it
+                    Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -52,7 +53,8 @@ class ExchangeListFragment : Fragment(R.layout.fragment_exchange_list),
     }
 
     override fun onItemClick(Currency: Currency) {
-        val action = ExchangeListFragmentDirections.actionExchangeListFragment2ToDetailsFragment(Currency)
+        val action =
+            ExchangeListFragmentDirections.actionExchangeListFragment2ToDetailsFragment(Currency)
         findNavController().navigate(action)
     }
 }

@@ -71,8 +71,8 @@ dependencies {
     // Glide
     implementation "com.github.bumptech.glide:glide:$glideVersion"
 
-    // Paging 3
-    implementation "androidx.paging:paging-runtime:$pagingVersion"
+    // Graph
+    implementation 'com.jjoe64:graphview:4.2.2'
 }
 
 kapt {
