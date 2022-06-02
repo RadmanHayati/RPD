@@ -26,7 +26,7 @@ object AppModule {
     fun provideExchangeApi(): ExchangeApi {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("https://api.coingecko.com/api/v3/")
+            .baseUrl("https://api.coingecko.com/api/v3/coins/")
             .build()
             .create(ExchangeApi::class.java)
     }

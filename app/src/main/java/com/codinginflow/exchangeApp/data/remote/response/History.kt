@@ -4,4 +4,4 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class History(val history: List<List<Double>>? = null):Parcelable
+data class History(val prices: List<List<Double>>? = null):Parcelable

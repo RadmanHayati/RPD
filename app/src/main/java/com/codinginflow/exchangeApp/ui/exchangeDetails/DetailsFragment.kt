@@ -27,33 +27,35 @@ class DetailsFragment: Fragment(R.layout.fragment_details)  {
         _binding = FragmentDetailsBinding.bind(view)
         binding.apply {
             val currency = args.selectedCurrency
+            Log.i("checkkk", "arg is here ${currency.name} ")
             viewModel.loadCurrencyInfo(currency.name)
             viewModel.currencyInfo.observe(viewLifecycleOwner) { response ->
+                Log.i("checkkk", "no data ? ${response.data?.prices} ")
                 if (response.data != null) {
-                    Log.i("checkkk", "${response.data.history} ")
+                    Log.i("checkkk", "${response.data.prices} ")
                     Glide.with(this@DetailsFragment)
                         .load(currency.image)
                         .error(R.drawable.ic_error)
-                        .listener(object : RequestListener<Drawable> {
-                            override fun onLoadFailed(
-                                e: GlideException?,
-                                model: Any?,
-                                target: com.bumptech.glide.request.target.Target<Drawable>?,
-                                isFirstResource: Boolean
-                            ): Boolean {
-                                TODO("Not yet implemented")
-                            }
-                            override fun onResourceReady(
-                                resource: Drawable?,
-                                model: Any?,
-                                target: Target<Drawable>?,
-                                dataSource: DataSource?,
-                                isFirstResource: Boolean
-                            ): Boolean {
-                                TODO("Not yet implemented")
-                            }
-                        }
-                        )
+//                        .listener(object : RequestListener<Drawable> {
+//                            override fun onLoadFailed(
+//                                e: GlideException?,
+//                                model: Any?,
+//                                target: com.bumptech.glide.request.target.Target<Drawable>?,
+//                                isFirstResource: Boolean
+//                            ): Boolean {
+//                                TODO("Not yet implemented")
+//                            }
+//                            override fun onResourceReady(
+//                                resource: Drawable?,
+//                                model: Any?,
+//                                target: Target<Drawable>?,
+//                                dataSource: DataSource?,
+//                                isFirstResource: Boolean
+//                            ): Boolean {
+//                                TODO("Not yet implemented")
+//                            }
+//                        }
+//                        )
                         .into(imageView)
                     textViewDescription.text = currency.name
                     textViewPrice.text = currency.price.toString()
