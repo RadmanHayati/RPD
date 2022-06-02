@@ -14,9 +14,10 @@ import javax.inject.Inject
 class DetailsViewModel @Inject constructor(
     private val repository: ExchangeRepository
 ) : ViewModel() {
-    val currencyInfo = MutableLiveData<Resource<History>>()
+    val currencyInfo = MutableLiveData<Resource<List<Double>>>()
     val isLoading = MutableLiveData(false)
     val loadError = MutableLiveData<String>()
+    val priceList = mutableListOf<Double>()
     fun loadCurrencyInfo(name: String) {
         // currentQuery.value = query
         isLoading.value = true
@@ -26,7 +27,10 @@ class DetailsViewModel @Inject constructor(
                 is Resource.Success -> {
                     loadError.value = ""
                     isLoading.value = false
-                    currencyInfo.postValue(result)
+                    for (pairs in result.data?.prices!!) {
+                        priceList.add(pairs[1])
+                    }
+                    currencyInfo.postValue(Resource.Success(priceList))
                 }
                 is Resource.Error -> {
                     loadError.value = result.message

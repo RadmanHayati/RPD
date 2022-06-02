@@ -30,9 +30,9 @@ class DetailsFragment: Fragment(R.layout.fragment_details)  {
             Log.i("checkkk", "arg is here ${currency.name} ")
             viewModel.loadCurrencyInfo(currency.name)
             viewModel.currencyInfo.observe(viewLifecycleOwner) { response ->
-                Log.i("checkkk", "no data ? ${response.data?.prices} ")
+                Log.i("checkkk", "no data ? ${response.data} ")
                 if (response.data != null) {
-                    Log.i("checkkk", "${response.data.prices} ")
+                  //  Log.i("checkkk", "${response.data.prices} ")
                     Glide.with(this@DetailsFragment)
                         .load(currency.image)
                         .error(R.drawable.ic_error)
